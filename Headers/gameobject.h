@@ -16,9 +16,8 @@ public:
     GameObject(QString, int=1);
     virtual ~GameObject();
 
-    //rect and image get and set functions
+    //rect and image get functions
     QRect* getRect();
-    virtual void setRect(QRect);
     QImage* getImage();
 private:
     QImage* image;
