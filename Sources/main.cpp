@@ -2,23 +2,16 @@
 #include <QDesktopWidget>
 #include <QApplication>
 
-void center(QWidget& widget){
-    int x,y;
-    int screenWidth;
-    int screenHeight;
-
+//Function to center a QWidget relative to the users display and give the QWidget a fixed size
+void setup(QWidget& widget){
     int WIDTH = 300;
     int HEIGHT = 400;
 
-    QDesktopWidget *desktop = QApplication::desktop();
+    //Create a QDesktopWidget object to get inforamtion about the userss desktop
+    QDesktopWidget* desktop = QApplication::desktop();
 
-    screenWidth = desktop->width();
-    screenHeight = desktop->height();
-
-    x = (screenWidth - WIDTH)/2;
-    y = (screenHeight - HEIGHT)/2;
-
-    widget.setGeometry(x, y, WIDTH, HEIGHT);
+    //Reposition the QWidget in the middle of the user's desktop
+    widget.setGeometry((desktop->width() - WIDTH)/2, (desktop->height() - HEIGHT)/2, WIDTH, HEIGHT);
     widget.setFixedSize(WIDTH, HEIGHT);
 }
 
@@ -30,7 +23,7 @@ int main(int argc, char *argv[])
 
     window.setWindowTitle("Breakout");
     window.show();
-    center(window);
+    setup(window);
 
     return a.exec();
 }
