@@ -14,12 +14,6 @@ public:
     
     //Reset the ball to its defaults
     void resetState();
-
-    //Functions to move the ball in all four directions as a response to colliding with other objects
-    void moveBottom(int);
-    void moveTop(int);
-    void moveLeft(int);
-    void moveRight(int);
     
     //Function that will automatically move the ball relative to the limitations of the game window
     void autoMove();
