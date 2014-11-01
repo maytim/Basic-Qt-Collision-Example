@@ -10,7 +10,6 @@ class Brick : public GameObject{
 public:
     //Constructors
     Brick(int, int);
-    ~Brick();
     //Reset to defaults
     void resetState();
     //A function to check if the brick is destroyed
