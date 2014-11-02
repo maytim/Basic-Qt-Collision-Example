@@ -29,6 +29,9 @@ protected:
     void stopGame();
     void victory();
     
+    //Function to help paint text messages
+    void writeToPainter(QPainter*, QString);
+    
     //Function to check for collision of GameObjects
     void checkCollision();
 private:
