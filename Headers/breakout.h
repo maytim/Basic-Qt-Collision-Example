@@ -11,10 +11,8 @@
 #include <QWidget>
 #include <QKeyEvent>
 
-class Breakout : public QWidget
-{
+class Breakout : public QWidget{
     Q_OBJECT
-
 public:
     //Constructor and Destructor
     Breakout(QWidget *parent = 0);
