@@ -17,7 +17,6 @@ public:
     //A function to set the destroyed bool
     void setDestroyed(bool);
 private:
-    int position;
     bool destroyed;
 };
 
