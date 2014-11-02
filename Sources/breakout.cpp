@@ -14,12 +14,10 @@ Breakout::Breakout(QWidget *parent) : QWidget(parent)
     //Create the GameObjects
     ball = new Ball();
     paddle = new Paddle();
-
-    int k = 0;
+    
     for(int i=0; i<5; i++){
         for(int j=0; j<6; j++){
-            bricks[k] = new Brick(j*40+30, i*18+30);
-            k++;
+            bricks.push_back(new Brick(j*40+30, i*18+30));
         }
     }
 }
@@ -29,8 +27,8 @@ Breakout::~Breakout()
 {
     delete ball;
     delete paddle;
-    for(int i=0; i<30; i++){
-        delete bricks[i];
+    for(auto& b : bricks){
+        delete b;
     }
 }
 
@@ -48,9 +46,9 @@ void Breakout::paintEvent(QPaintEvent* event){
         painter.drawImage(*ball->getRect(), *ball->getImage());
         painter.drawImage(*paddle->getRect(), *paddle->getImage());
 
-        for(int i=0; i<30; i++){
-            if(!bricks[i]->isDestroyed())
-                painter.drawImage(*bricks[i]->getRect(), *bricks[i]->getImage());
+        for(const auto& b : bricks){
+            if(!b->isDestroyed())
+                painter.drawImage(*b->getRect(), *b->getImage());
         }
     }
 }
@@ -113,8 +111,8 @@ void Breakout::startGame(){
        ball->resetState();
        paddle->resetState();
 
-       for(int i=0; i<30; i++){
-           bricks[i]->setDestroyed(false);
+       for(auto& b : bricks){
+           b->setDestroyed(false);
        }
        
        //Update the game states
@@ -164,8 +162,9 @@ void Breakout::checkCollision(){
         stopGame();
 
     //If all of the Bricks are destroyed then end the game
-    for(int i=0, j=0; i<30; i++){
-        if(bricks[i]->isDestroyed())
+    int j = 0;
+    for(const auto& b : bricks){
+        if(b->isDestroyed())
             j++;
         if(j==30)
             victory();
@@ -208,8 +207,8 @@ void Breakout::checkCollision(){
 
     //Second collision check: Ball and Brick
     //Iterate through all of the Bricks and check if they currently intersect with the Ball
-    for(int i=0; i<30; i++){
-        if((ball->getRect())->intersects(*bricks[i]->getRect())){
+    for(auto& b : bricks){
+        if((ball->getRect())->intersects(*b->getRect())){
             int ballLeft = ball->getRect()->left();
             int ballHeight = ball->getRect()->height();
             int ballWidth = ball->getRect()->width();
@@ -223,17 +222,17 @@ void Breakout::checkCollision(){
 
             //If the current Brick hasn't been destroyed then check if it's intersecting one of the points
             //and update the x and y dir accordingly
-            if(!bricks[i]->isDestroyed()){
-                if(bricks[i]->getRect()->contains(pointRight))
+            if(!b->isDestroyed()){
+                if(b->getRect()->contains(pointRight))
                     ball->setXDir(-1);
-                else if(bricks[i]->getRect()->contains(pointLeft))
+                else if(b->getRect()->contains(pointLeft))
                     ball->setXDir(1);
-                if(bricks[i]->getRect()->contains(pointTop))
+                if(b->getRect()->contains(pointTop))
                     ball->setYDir(1);
-                else if(bricks[i]->getRect()->contains(pointBottom))
+                else if(b->getRect()->contains(pointBottom))
                     ball->setYDir(-1);
                 //Finally set that Brick to be destroyed
-                bricks[i]->setDestroyed(true);
+                b->setDestroyed(true);
             }
         }
     }
