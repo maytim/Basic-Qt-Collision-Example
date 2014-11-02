@@ -37,6 +37,9 @@ private:
     //Variable to keep track of QTimerId 
     int timerId;
     
+    //Points variable
+    int points;
+    
     //The GameObjects
     Ball* ball;
     Paddle* paddle;
