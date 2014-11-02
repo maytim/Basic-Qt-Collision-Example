@@ -18,9 +18,10 @@ Breakout::Breakout(QWidget *parent) : QWidget(parent)
     ball = new Ball();
     paddle = new Paddle();
     
-    for(int i=0; i<5; i++){
-        for(int j=0; j<6; j++){
-            bricks.push_back(new Brick(j*40+30, i*18+30));
+    for(int i=0; i<CONSTANTS::BRICK_ROWS; i++){
+        for(int j=0; j<CONSTANTS::BRICK_COLS; j++){
+            bricks.push_back(new Brick(j*CONSTANTS::BRICK_WIDTH_INTERVAL+CONSTANTS::BRICK_MARGIN,
+                                       i*CONSTANTS::BRICK_HEIGHT_INTERVAL+CONSTANTS::BRICK_MARGIN));
         }
     }
 }
@@ -41,9 +42,9 @@ void Breakout::paintEvent(QPaintEvent* event){
 
     //Display the appropriate text if in the game over or game won states
     if(gameOver)
-        writeToPainter(&painter,"Game Over",height(),width());
+        writeToPainter(&painter,"Game Over");
     else if(gameWon)
-        writeToPainter(&painter,"Victory",height(),width());
+        writeToPainter(&painter,"Victory");
     //Otherwise draw the GameObjects
     else{
         painter.drawImage(*ball->getRect(), *ball->getImage());
@@ -163,11 +164,11 @@ void Breakout::victory(){
 //Function to handle collisions between GameObjects
 void Breakout::checkCollision(){
     //If the Ball moves to the bottom of the screen then end the game
-    if(ball->getRect()->bottom() > 400)
+    if(ball->getRect()->bottom() > CONSTANTS::SCREEN_HEIGHT)
         stopGame();
 
     //If all of the Bricks are destroyed then end the game
-    if(points == 30)
+    if(points == CONSTANTS::BRICK_ROWS*CONSTANTS::BRICK_COLS)
         victory();
 
     //First collision check: Ball and Paddle
@@ -241,7 +242,7 @@ void Breakout::checkCollision(){
 }
 
 //Helper function for the text events when the game ends
-void Breakout::writeToPainter(QPainter* p, QString s, int h, int w){
+void Breakout::writeToPainter(QPainter* p, QString s){
     //Basic text setup
     QFont font("Courier", 15, QFont::DemiBold);
     QFontMetrics fm(font);
@@ -250,6 +251,6 @@ void Breakout::writeToPainter(QPainter* p, QString s, int h, int w){
     p->setFont(font);
 
     //Draw the text in the middle of the screen
-    p->translate(QPoint(w/2,h/2));
+    p->translate(QPoint(CONSTANTS::SCREEN_WIDTH/2,CONSTANTS::SCREEN_HEIGHT/2));
     p->drawText(-textWidth/2, 0, s);
 }
