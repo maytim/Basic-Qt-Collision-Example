@@ -1,7 +1,7 @@
 #include "ball.h"
 
 //Create the Ball object and set it to the default values using resetState()
-Ball::Ball() : GameObject("C:/Qt/Projects/BreakoutGame/redball.png",3){
+Ball::Ball() : GameObject(CONSTANTS::BALL_IMAGE,3){
     resetState();
 }
 
@@ -14,7 +14,7 @@ void Ball::autoMove(){
     //within the window's constraints
     if(getRect()->left() == 0)
         xdir = 1;
-    else if(getRect()->right() == 300)
+    else if(getRect()->right() == CONSTANTS::SCREEN_WIDTH)
         xdir = -1;
     else if(getRect()->top() == 0)
         ydir = 1;
@@ -22,7 +22,7 @@ void Ball::autoMove(){
 
 //Reset the balls position and x and y direction to the default values
 void Ball::resetState(){
-    getRect()->moveTo(230,300);
+    getRect()->moveTo(CONSTANTS::DEFAULT_BALL_X, CONSTANTS::DEFAULT_BALL_Y);
     xdir = 1;
     ydir = -1;
 }
