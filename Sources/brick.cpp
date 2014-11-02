@@ -1,7 +1,7 @@
 #include "brick.h"
 
 //The Brick constructor accepts x and y coordinates to position the Brick
-Brick::Brick(int x, int y) : GameObject("C:/Qt/Projects/BreakoutGame/bluebrick.png"){
+Brick::Brick(int x, int y) : GameObject(CONSTANTS::BRICK_IMAGE){
     destroyed = false;
     //After creating the Brick move it to its correct position
     getRect()->translate(x, y);
