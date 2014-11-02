@@ -233,6 +233,7 @@ void Breakout::checkCollision(){
                     ball->setYDir(-1);
                 //Finally set that Brick to be destroyed
                 b->setDestroyed(true);
+                break;
             }
         }
     }
