@@ -5,6 +5,9 @@
 //Breakout constructor
 Breakout::Breakout(QWidget *parent) : QWidget(parent)
 {
+    //Set up points
+    points = 0;
+    
     //Set up the game states
     gameOver = false;
     gameWon = false;
@@ -145,6 +148,7 @@ void Breakout::stopGame(){
     killTimer(timerId);
     gameOver = true;
     gameStarted = false;
+    points = 0;
 }
 
 //Function to handle winning the game
@@ -153,6 +157,7 @@ void Breakout::victory(){
     killTimer(timerId);
     gameWon = true;
     gameStarted = false;
+    points = 0;
 }
 
 //Function to handle collisions between GameObjects
@@ -162,13 +167,8 @@ void Breakout::checkCollision(){
         stopGame();
 
     //If all of the Bricks are destroyed then end the game
-    int j = 0;
-    for(const auto& b : bricks){
-        if(b->isDestroyed())
-            j++;
-        if(j==30)
-            victory();
-    }
+    if(points == 30)
+        victory();
 
     //First collision check: Ball and Paddle
     //Check if the Ball's rect is intersecting the Paddle's rect
@@ -233,6 +233,7 @@ void Breakout::checkCollision(){
                     ball->setYDir(-1);
                 //Finally set that Brick to be destroyed
                 b->setDestroyed(true);
+                points++;
                 break;
             }
         }
