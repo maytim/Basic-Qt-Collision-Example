@@ -40,7 +40,7 @@ private:
     //The GameObjects
     Ball* ball;
     Paddle* paddle;
-    Brick* bricks[30];
+    std::vector<Brick*> bricks;
     
     //The game states
     bool gameOver, gameWon, gameStarted, paused;
