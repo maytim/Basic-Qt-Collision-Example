@@ -10,7 +10,6 @@
 class Ball : public GameObject{
 public:
     Ball();
-    ~Ball();
     
     //Reset the ball to its defaults
     void resetState();
