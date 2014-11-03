@@ -216,22 +216,28 @@ void Breakout::checkCollision(){
             int ballTop = ball->getRect()->top();
 
             //Create points to check agains that correspond to the Balls bounds
-            QPoint pointRight(ballLeft + ballWidth + 1, ballTop);
-            QPoint pointLeft(ballLeft - 1, ballTop);
-            QPoint pointTop(ballLeft, ballTop - 1);
-            QPoint pointBottom(ballLeft, ballTop + ballHeight + 1);
+            QPoint pointRightT(ballLeft + ballWidth + 1, ballTop);
+            QPoint pointLeftT(ballLeft - 1, ballTop);
+            QPoint pointLeftB(ballLeft - 1, ballTop + ballHeight + 1);
+            QPoint pointRightB(ballLeft + ballWidth + 1, ballTop + ballHeight + 1);
+            QPoint pointTopM(ballLeft + ballWidth/2, ballTop - 1);
+            QPoint pointBottomM(ballLeft + ballWidth/2, ballTop + ballHeight + 1);
 
             //If the current Brick hasn't been destroyed then check if it's intersecting one of the points
             //and update the x and y dir accordingly
             if(!b->isDestroyed()){
-                if(b->getRect()->contains(pointRight))
-                    ball->setXDir(-1);
-                else if(b->getRect()->contains(pointLeft))
-                    ball->setXDir(1);
-                if(b->getRect()->contains(pointTop))
-                    ball->setYDir(1);
-                else if(b->getRect()->contains(pointBottom))
-                    ball->setYDir(-1);
+                if(b->getRect()->contains(pointTopM))
+                {ball->setXDir(0); ball->setYDir(1);}
+                else if(b->getRect()->contains(pointBottomM))
+                {ball->setXDir(0); ball->setYDir(-1);}
+                else if(b->getRect()->contains(pointRightT))
+                {ball->setXDir(-1); ball->setYDir(1);}
+                else if(b->getRect()->contains(pointLeftT))
+                {ball->setXDir(1); ball->setYDir(1);}
+                else if(b->getRect()->contains(pointLeftB))
+                {ball->setXDir(1); ball->setYDir(-1);}
+                else if(b->getRect()->contains(pointRightB))
+                {ball->setXDir(-1); ball->setYDir(-1);}
                 //Finally set that Brick to be destroyed
                 b->setDestroyed(true);
                 points++;
